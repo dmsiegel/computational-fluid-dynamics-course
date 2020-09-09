@@ -7,6 +7,8 @@
 
 **Course Outline and policies:** [https://www.physics.uoguelph.ca/course-outlines/special-topics-astrophysics-numerical-hydrodynamics-phys7900](https://www.physics.uoguelph.ca/course-outlines/special-topics-astrophysics-numerical-hydrodynamics-phys7900)
 
+**Course number:** PHYS 7900 at the [University of Guelph](https://www.physics.uoguelph.ca) and the [University of Waterloo](https://uwaterloo.ca/physics-astronomy/)
+
 **Format:** Online synchronous lectures via zoom
 
 **Time:** Tuesdays and Thursdays 3:30-5:00 PM
