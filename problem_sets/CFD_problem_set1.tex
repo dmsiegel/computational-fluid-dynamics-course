@@ -1,0 +1,153 @@
+\documentclass[letter,11pt]{article}
+\usepackage{authblk}
+\usepackage[english]{babel}
+
+%\usepackage{url}
+%\usepackage{graphicx}
+%\usepackage[boxed,lined]{algorithm2e}
+%\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}           % proof environment etc.
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{empheq}
+\usepackage{natbib}
+%\usepackage{titlesec}
+%\usepackage{anysize}
+%\setlength{\textwidth}{160mm}
+%\setlength{\oddsidemargin}{2mm}
+%\setlength{\textheight}{234mm} % 234
+%\setlength{\topmargin}{-20mm} %-5
+
+\usepackage{geometry} % Allows the configuration of document margins
+%\geometry{a4paper, textwidth=5.2in, textheight=8.5in,
+%  marginparsep=7pt, marginparwidth=.6in} % Document margin settings
+\geometry{marginparsep=0pt, marginparwidth=0in,top=1in,bottom=1in, right=1.5in, left=1.5in, headsep=0.1in,headheight=0.5in}
+
+\usepackage{graphicx}  % needed for figures
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+%--- fill inside borders ---
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=blue,         % color of internal links
+  citecolor=blue,         % color of links to bibliography
+}
+
+% set header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancypagestyle{problem_set}{
+\rhead{Fall 2020}
+\lhead{Guelph-Waterloo Physics Institute (GWPI)}
+\cfoot{\thepage}
+%\rfoot{Page \thepage}
+}
+
+\renewcommand\Affilfont{\itshape}
+
+
+\newenvironment{itemize*}%
+  {\begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{itemize}}
+
+
+
+\begin{document}
+\pagestyle{problem_set}
+
+
+\phantom{.}
+%\vspace{0.1cm}
+\begin{center}
+{\Large\textbf{Computational Fluid Dynamics\\[0.4cm] Problem Set 1}} \\[0.7cm]
+Daniel M. Siegel \\[0.1cm]
+Perimeter Institute for Theoretical Physics\\
+Department of Physics, University of Guelph
+\end{center}
+
+\vspace{1cm}
+
+{\noindent\large\textbf{Problem 1 (Hyperbolic systems)}}%\\[0.1cm]
+
+\begin{itemize}
+  \item[$(a)$] This problem illustrates how the term ``hyperbolic'' can be motivated for 1st order systems of PDEs. Show that any linear, constant-coefficient second-order hyperbolic PDE in $\RR^{n+1}$ of the form
+  \begin{equation}
+    \sum_{i,j = 0}^{n} a_{ij} u_{x_i x_j} + b(\{u_{x_i}\}) = 0
+  \end{equation}
+   can be recast as a system of 1st order hyperbolic PDEs. \newline
+   \emph{Hint:} Note that it suffices to consider an equation of the form $u_{tt}-\Delta u + b(\{u_{x_i}\}) = 0$, since the principal part can always be brought into this form by a suitable coordinate transformation (as shown in the lectures). Here, $t=x_0$ and $\Delta$ only acts on $(x_1,\ldots,x_n)\in\RR^n$. You may want to consider a vector $\mathbf{u}$ composed of derivatives $u_{x_i}$.
+
+   \item[$(b)$] Another way to motivate hyperbolicity for systems of $m$ 1st order PDEs,
+    \begin{equation}
+    \mathbf{u}_t + \sum_{i=1}^{n} A_{i}(x,t) \mathbf{u}_{x_i} = 0,
+    \end{equation}
+    is to  require the existence of $m$ independent plane wave solutions $\mathbf{u}(\mathbf{x},t) = \mathbf{v}(\mathbf{\xi\cdot x} - \sigma t)$ for any direction $\xi\in\RR^n$. Using this ansatz, show that hyperbolicity implies the existence of $m$ independent plane waves.
+\end{itemize}
+
+\vspace{1cm}
+
+{\noindent\large\textbf{Problem 2 (Hyperbolicity of Euler's equations)}}\\ %[0.2cm]
+
+\noindent Consider the 1D Euler equations in conservation form,
+\begin{equation}
+    \mathbf{u}_t + \mathbf{f}(\mathbf{u})_x = 0, \label{eq:Euler_con}
+\end{equation}
+where $\mathbf{u} = (\rho, \rho v, E)$ and $\mathbf{f} = (\rho v, \rho v^2 + p, v(E+p))$. Assume a general equation of state $p = p(\rho,e)$.
+
+\begin{itemize}
+  \item[$(a)$] (\emph{Invariance of hyperbolicity under coordinate transformation}) \\
+  Consider $\mathbf{u}$ as a solution to a strictly hyperbolic system of the type
+  \begin{equation}
+    \mathbf{u}_t + A(\mathbf{u})\mathbf{u}_x = 0,
+  \end{equation}
+  and let $\Phi: \RR^m \rightarrow \RR^m$ denote a smooth coordinate transformation with inverse $\Phi^{-1}$. Show that $\tilde{\mathbf{u}}\equiv \Phi(\mathbf{u})$ satisfies the strictly hyperbolic system
+  \begin{equation}
+    \tilde{\mathbf{u}}_t + \tilde{A}(\tilde{\mathbf{u}})\tilde{\mathbf{u}}_x = 0,
+  \end{equation}
+  where $\tilde{A}(\mathbf{w})\equiv D\Phi(\Phi^{-1}(\mathbf{w}))A(\Phi^{-1}(\mathbf{w}))D(\Phi^{-1})(\mathbf{w})$ for $\mathbf{w}\in \RR^m$.
+
+  \item[$(b)$] (\emph{Conservatives to primitives recovery})\\
+    Write down the coordinate transformation $\Phi: \mathbf{u}\mapsto \mathbf{w}$, where $\mathbf{w}\equiv (\rho,v,e)$ are the primitive variables, and derive the Euler equations in primitive (non-conservation) form
+    \begin{equation}
+      \mathbf{w}_t + A(\mathbf{w})\mathbf{w}_x = 0. \label{eq:Euler_prim}
+    \end{equation}
+
+  \item[$(c)$] (\emph{Strict hyperbolicity})\\
+  Starting from \eqref{eq:Euler_prim} and using $(a)$, show that the Euler equations \eqref{eq:Euler_con} are strictly hyperbolic if the local sound speed is positive,
+    \begin{equation}
+      c_{\rm s} \equiv \left(\frac{p}{\rho^2}\frac{\partial p}{\partial e} + \frac{\partial p}{\partial\rho}\right)^{1/2} > 0,
+    \end{equation}
+    i.e., provided that $p>0$ and $\partial p/\partial e > 0$, $\partial p/\partial\rho > 0$. This shows that numerical schemes that exploit strong hyperbolicity cannot handle vacuum, but instead require at least a tenous ``atmosphere'' on the computational domain.
+\end{itemize}
+
+%\vfill
+\vspace{1cm}
+%\newpage
+%\phantom{.}
+
+{\noindent\large\textbf{Problem 3 (Euler equations: energy evolution)}}\\
+
+\begin{itemize}
+  \item[$(a)$] From the second moment of the Boltzmann equation, and following the methods introduced in the lectures, derive the equation for the total energy density,
+  \begin{equation}
+    \frac{\partial E}{\partial t} + \frac{\partial}{\partial x_j}\left[(E+p)v_j\right] = -\frac{\partial h_j}{\partial x_j} + \rho v_j F_j, \label{eq:Euler_E}
+  \end{equation}
+  where $h_j \equiv \int \frac{m}{2}\tilde{u}_j\tilde{u}^2 f d^3u$ is the heat flux.
+  \item[$(b)$]
+    Only using the continuity and momentum equations, derive a separate evolution equation for the bulk (kinetic) energy of the fluid,
+    \begin{equation}
+      \frac{\partial }{\partial t}\left(\frac{1}{2}\rho v^2\right) + \frac{\partial}{\partial x_j}\left(\frac{1}{2}\rho v^2 v_j\right) = -v_j\frac{\partial p}{\partial x_j} + \rho v_j F_j.
+    \end{equation}
+    Using Eq.~\eqref{eq:Euler_E} and assuming $h_j\equiv 0$ then derive the evolution equation for the internal energy density,
+    \begin{equation}
+      \frac{\partial e}{\partial t} + \frac{\partial}{\partial x_j}(e v_j) = -p\frac{\partial v_j}{\partial x_j}.
+    \end{equation}
+  \end{itemize}
+
+\end{document}
+
