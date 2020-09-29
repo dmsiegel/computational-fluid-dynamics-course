@@ -48,6 +48,12 @@
 
 \renewcommand\Affilfont{\itshape}
 
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\Rtwo}{\mathbb{R}^2}
+\newcommand{\Rthree}{\mathbb{R}^3}
+\newcommand{\RR}{\mathbb{R}}
+
 
 \newenvironment{itemize*}%
   {\begin{itemize}%
@@ -80,13 +86,13 @@ Department of Physics, University of Guelph
     \sum_{i,j = 0}^{n} a_{ij} u_{x_i x_j} + b(\{u_{x_i}\}) = 0
   \end{equation}
    can be recast as a system of 1st order hyperbolic PDEs. \newline
-   \emph{Hint:} Note that it suffices to consider an equation of the form $u_{tt}-\Delta u + b(\{u_{x_i}\}) = 0$, since the principal part can always be brought into this form by a suitable coordinate transformation (as shown in the lectures). Here, $t=x_0$ and $\Delta$ only acts on $(x_1,\ldots,x_n)\in\RR^n$. You may want to consider a vector $\mathbf{u}$ composed of derivatives $u_{x_i}$.
+   \emph{Hint:} Note that it suffices to consider an equation of the form $u_{tt}-\Delta u + b(\{u_{x_i}\}) = 0$, since the principal part can always be brought into this form by a suitable coordinate transformation (as shown in the lectures). Here, $t=x_0$ and $\Delta$ only acts on $(x_1,\ldots,x_n)\in\Rn$. You may want to consider a vector $\mathbf{u}$ composed of derivatives $u_{x_i}$.
 
    \item[$(b)$] Another way to motivate hyperbolicity for systems of $m$ 1st order PDEs,
     \begin{equation}
     \mathbf{u}_t + \sum_{i=1}^{n} A_{i}(x,t) \mathbf{u}_{x_i} = 0,
     \end{equation}
-    is to  require the existence of $m$ independent plane wave solutions $\mathbf{u}(\mathbf{x},t) = \mathbf{v}(\mathbf{\xi\cdot x} - \sigma t)$ for any direction $\xi\in\RR^n$. Using this ansatz, show that hyperbolicity implies the existence of $m$ independent plane waves.
+    is to  require the existence of $m$ independent plane wave solutions $\mathbf{u}(\mathbf{x},t) = \mathbf{v}(\mathbf{\xi\cdot x} - \sigma t)$ for any direction $\xi\in\Rn$. Using this ansatz, show that hyperbolicity implies the existence of $m$ independent plane waves.
 \end{itemize}
 
 \vspace{1cm}
@@ -97,7 +103,7 @@ Department of Physics, University of Guelph
 \begin{equation}
     \mathbf{u}_t + \mathbf{f}(\mathbf{u})_x = 0, \label{eq:Euler_con}
 \end{equation}
-where $\mathbf{u} = (\rho, \rho v, E)$ and $\mathbf{f} = (\rho v, \rho v^2 + p, v(E+p))$. Assume a general equation of state $p = p(\rho,e)$.
+where $\mathbf{u} = (\rho, \rho v, E)$ and $\mathbf{f} = (\rho v, \rho v^2 + p, v(E+p))$. Assume a general equation of state $p = p(\rho,\epsilon)$. Here, $E=\frac{1}{2}\rho v^2 + e$ is the total energy density, and $\epsilon = e/\rho$ denotes the specific internal energy.
 
 \begin{itemize}
   \item[$(a)$] (\emph{Invariance of hyperbolicity under coordinate transformation}) \\
@@ -105,14 +111,14 @@ where $\mathbf{u} = (\rho, \rho v, E)$ and $\mathbf{f} = (\rho v, \rho v^2 + p, 
   \begin{equation}
     \mathbf{u}_t + A(\mathbf{u})\mathbf{u}_x = 0,
   \end{equation}
-  and let $\Phi: \RR^m \rightarrow \RR^m$ denote a smooth coordinate transformation with inverse $\Phi^{-1}$. Show that $\tilde{\mathbf{u}}\equiv \Phi(\mathbf{u})$ satisfies the strictly hyperbolic system
+  and let $\Phi: \Rm \rightarrow \Rm$ denote a smooth coordinate transformation with inverse $\Phi^{-1}$. Show that $\tilde{\mathbf{u}}\equiv \Phi(\mathbf{u})$ satisfies the strictly hyperbolic system
   \begin{equation}
     \tilde{\mathbf{u}}_t + \tilde{A}(\tilde{\mathbf{u}})\tilde{\mathbf{u}}_x = 0,
   \end{equation}
-  where $\tilde{A}(\mathbf{w})\equiv D\Phi(\Phi^{-1}(\mathbf{w}))A(\Phi^{-1}(\mathbf{w}))D(\Phi^{-1})(\mathbf{w})$ for $\mathbf{w}\in \RR^m$.
+  where $\tilde{A}(\mathbf{w})\equiv D\Phi(\Phi^{-1}(\mathbf{w}))A(\Phi^{-1}(\mathbf{w}))D(\Phi^{-1})(\mathbf{w})$ for $\mathbf{w}\in \Rm$.
 
   \item[$(b)$] (\emph{Conservatives to primitives recovery})\\
-    Write down the coordinate transformation $\Phi: \mathbf{u}\mapsto \mathbf{w}$, where $\mathbf{w}\equiv (\rho,v,e)$ are the primitive variables, and derive the Euler equations in primitive (non-conservation) form
+    Write down the coordinate transformation $\Phi: \mathbf{u}\mapsto \mathbf{w}$, where $\mathbf{w}\equiv (\rho,v,\epsilon)$ are the primitive variables, and derive the Euler equations in primitive (non-conservation) form
     \begin{equation}
       \mathbf{w}_t + A(\mathbf{w})\mathbf{w}_x = 0. \label{eq:Euler_prim}
     \end{equation}
@@ -120,9 +126,9 @@ where $\mathbf{u} = (\rho, \rho v, E)$ and $\mathbf{f} = (\rho v, \rho v^2 + p, 
   \item[$(c)$] (\emph{Strict hyperbolicity})\\
   Starting from \eqref{eq:Euler_prim} and using $(a)$, show that the Euler equations \eqref{eq:Euler_con} are strictly hyperbolic if the local sound speed is positive,
     \begin{equation}
-      c_{\rm s} \equiv \left(\frac{p}{\rho^2}\frac{\partial p}{\partial e} + \frac{\partial p}{\partial\rho}\right)^{1/2} > 0,
+      c_{\rm s} \equiv \left(\frac{p}{\rho^2}\frac{\partial p}{\partial \epsilon} + \frac{\partial p}{\partial\rho}\right)^{1/2} > 0,
     \end{equation}
-    i.e., provided that $p>0$ and $\partial p/\partial e > 0$, $\partial p/\partial\rho > 0$. This shows that numerical schemes that exploit strong hyperbolicity cannot handle vacuum, but instead require at least a tenous ``atmosphere'' on the computational domain.
+    i.e., provided that $p>0$ and $\partial p/\partial \epsilon > 0$, $\partial p/\partial\rho > 0$. This shows that numerical schemes that exploit strong hyperbolicity cannot handle vacuum, but instead require at least a tenous ``atmosphere'' on the computational domain.
 \end{itemize}
 
 %\vfill
