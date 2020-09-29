@@ -15,6 +15,8 @@
 
 **First Lecture:** Thursday Sep. 10, 2020
 
+**Office hours:** Wednesdays 1:30 PM via zoom
+
 
 ## Contents
 
