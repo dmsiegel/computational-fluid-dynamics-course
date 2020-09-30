@@ -100,11 +100,13 @@
 7.2 The HLL family of Riemann solvers
 
 
-**8 Source terms and higher dimensions**
+**8 Source terms, higher dimensions, and higher-order methods**
 
 8.1 Balance laws: adding source terms
 
 8.2 Extension to multiple dimensions
+
+8.3 Higher-order multi-D schemes: MUSCL-Hancock methods
 
 
 **9 Outlook: a primer on discontinuous Galerkin methods**
