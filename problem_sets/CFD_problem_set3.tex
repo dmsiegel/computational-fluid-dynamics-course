@@ -1,0 +1,134 @@
+\documentclass[letter,11pt]{article}
+\usepackage{authblk}
+\usepackage[english]{babel}
+
+%\usepackage{url}
+%\usepackage{graphicx}
+%\usepackage[boxed,lined]{algorithm2e}
+%\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}           % wird für proof-Umgebung gebraucht
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{empheq}
+\usepackage{natbib}
+%\usepackage{titlesec}
+%\usepackage{anysize}
+%\setlength{\textwidth}{160mm}
+%\setlength{\oddsidemargin}{2mm}
+%\setlength{\textheight}{234mm} % 234
+%\setlength{\topmargin}{-20mm} %-5
+
+\usepackage{geometry} % Allows the configuration of document margins
+%\geometry{a4paper, textwidth=5.2in, textheight=8.5in,
+%  marginparsep=7pt, marginparwidth=.6in} % Document margin settings
+\geometry{marginparsep=0pt, marginparwidth=0in,top=1in,bottom=1in, right=1.5in, left=1.5in, headsep=0.1in,headheight=0.5in}
+
+\usepackage{graphicx}  % needed for figures
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+%--- fill inside borders ---
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=blue,         % color of internal links
+  citecolor=blue,         % color of links to bibliography
+}
+
+% set header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancypagestyle{problem_set}{
+\rhead{Fall 2020}
+\lhead{Guelph-Waterloo Physics Institute (GWPI)}
+\cfoot{\thepage}
+%\rfoot{Page \thepage}
+}
+
+\renewcommand\Affilfont{\itshape}
+
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\Rtwo}{\mathbb{R}^2}
+\newcommand{\Rthree}{\mathbb{R}^3}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\drm}{\mathrm{d}}
+
+\newenvironment{itemize*}%
+  {\begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{itemize}}
+
+
+
+\begin{document}
+\pagestyle{problem_set}
+
+
+\phantom{.}
+%\vspace{0.1cm}
+\begin{center}
+{\Large\textbf{Computational Fluid Dynamics\\[0.4cm] Problem Set 3}} \\[0.7cm]
+Daniel M. Siegel \\[0.1cm]
+Perimeter Institute for Theoretical Physics\\
+Department of Physics, University of Guelph
+\end{center}
+
+\vspace{1cm}
+
+\noindent \emph{Regarding implementations in the following questions, you may use \texttt{python} or another language of your choice. Please submit your code as a separate file or files.}
+
+\vspace{1cm}
+
+{\noindent\large\textbf{Problem 1 (Finite difference operators \& truncation errors)}}\\[0.1cm]
+
+\noindent Consider the function $u(x) = \sin(x)$. As usual, we will use the following notation: $u^{(k)}\equiv \drm^k/\drm x^k$.
+
+\begin{itemize}
+  	\item[$(a)$] Consider $u^{(1)}(1)$. Implement forward and centred difference approximations to $u^{(1)}(x)$ and compute corresponding approximations to $u^{(1)}(1)$, considering different grid spacings $\Delta x=\{1,0.1,0.01,0.001\}$. Plot the resulting truncation errors as a function of $\Delta x$ in log-log scale and fit appropriate functions to the `data' points to verify that the truncation errors are $\mathcal{O}(\Delta x)$ and $\mathcal{O}((\Delta x)^2)$ for forward and centred differences, respectively.
+
+  	\item[$(b)$] Following the general method outlined in the lectures, devise and implement a second-order accurate, one-sided (backward) finite difference approximation to $u^{(2)}(x)$. Following analogous steps as in $(a)$, verify that your implementation is indeed $\mathcal{O}((\Delta x)^2)$.
+
+\end{itemize}
+
+\vspace{1cm}
+
+{\noindent\large\textbf{Problem 2 (The heat equation: stability \& explicit vs.~implicit)}}\\%[-0.4cm]
+
+\noindent Consider the one-dimensional diffusion or heat equation
+\begin{equation}
+	u_t -\nu_{\rm d} u_{\rm xx} = 0 \label{eq:heat_eq}
+\end{equation}
+in the domain $0\le x \le 1$ with the diffusion coefficient $\nu_{\rm d}$. The analytical solution to an initial `heat spike' $u(x,0) = \delta(x-0.5)$ `injected' at the centre of the domain at $t=0$, subject to the boundary conditions $u(0,t)=u(1,t)=0$, is given by
+\begin{equation}
+	v(x,t) = 2 \sum_{n=1}^{\infty}\sin\left(\frac{\pi}{2}n\right)\sin(\pi n x) \exp(-\pi^2n^2\nu_{\rm d} t) 
+\end{equation}
+for $t>0$.
+
+\begin{itemize}
+  	\item[$(a)$] Derive a numerical scheme to solve Eq.~\eqref{eq:heat_eq} using a stencil that is first-order forward in time and second-order centered in space.
+
+  	\item[$(b)$] Implement the scheme in $(a)$ and advance the analytical solution $v(x,1)$ at $t=1$ numerically to $t=3$, using $\nu_{\rm d}=0.001$. Plot the fractional global error $E^n_i=|u^n_i-v(x_i,t^n)|/|v(x_i,t^n)|$ at $t^n = 3$ as a function of $x_i$, where $u^n_i$ denotes the numerical solution, for two sets of experiments: $(i)$ keep $\Delta x = 0.02$ fixed and vary $\Delta t = 0.2,0.1,0.05$ and $(ii)$ keep $\Delta t = 0.2$ fixed and vary $\Delta x = 0.02,0.01,0.005$. What do you observe? Does this scheme converge?
+
+  	\item[$(c)$] Perform a von Neumann stability analysis of your scheme $(a)$ and derive a corresponding stability criterion. Interpret your heuristic findings from $(b)$ in light of this stability analysis. According to the Lax theorem, where would you expect the scheme not to converge?
+
+  	\item[$(d)$] The stability restriction of explicit schemes for the heat equation, such as $\Delta t \propto (\Delta x)^2$ found above, often make it very expensive to evolve the heat equation. This motivates implicit schemes, such as the following: Consider the Crank-Nicholson scheme,
+  	\begin{equation}
+  		\frac{u_i^{n+1} - u_i^{n}}{\Delta t} - \nu_{\rm d} \frac{1}{2}\left[\frac{u_{i+1}^{n+1} - 2u^{n+1}_{i} + u_{i-1}^{n+1}}{(\Delta x)^2} + \frac{u_{i+1}^{n} - 2u^{n}_{i} + u_{i-1}^{n}}{(\Delta x)^2}  \right]   = 0,
+  	\end{equation}
+  	and prove that it is unconditionally stable (no limitation on $\Delta t$ and $\Delta x$).\\ \emph{Remark:} This scheme is second-order centered in time and space, with the stencil centered at $(i, n+1/2)$. The space discretization at the intermediate time level is obtained by averaging those at $n$ and $n+1$: $\frac{1}{2}(D^2u_i^{n+1} + D^2 u_i^{n})$.
+
+  	\item[$(e)$] \emph{(Bonus points, not required)}\\
+  	Implement the scheme discussed in $(d)$ and, in analogy to $(b)$, illustrate the stability properties by drastically varying the timestep $\Delta t$.\\
+  	\emph{Hint:} Start by writing the scheme in matrix form,
+  	\begin{equation}
+  		L \mathbf{u}^{n+1} = Q\mathbf{u}^{n},
+  	\end{equation}
+  	with a tridiagonal matrix $L$ and state vector $\mathbf{u}^{n}=(u_1^n,\ldots,u_I^n)$.
+
+\end{itemize}
+
+\end{document}
+
