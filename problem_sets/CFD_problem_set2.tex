@@ -48,6 +48,12 @@
 
 \renewcommand\Affilfont{\itshape}
 
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\Rtwo}{\mathbb{R}^2}
+\newcommand{\Rthree}{\mathbb{R}^3}
+\newcommand{\RR}{\mathbb{R}}
+
 \newenvironment{itemize*}%
   {\begin{itemize}%
     \setlength{\itemsep}{0pt}%
@@ -73,7 +79,7 @@ Department of Physics, University of Guelph
 
 {\noindent\large\textbf{Problem 1 (Viscous hydrodynamics)}}\\[0.1cm]
 
-\noindent In analogy to Problem 3 $(b)$ of Problem Set 1, derive separate evolution equations for the total kinetic energy density and internal energy density $e=\epsilon\rho$. This is to show that viscous effects dissipate kinetic energy into heat.
+\noindent In analogy to Problem 3 $(b)$ of Problem Set 1, derive separate evolution equations for the total kinetic energy density $\frac{1}{2}\rho v^2$ and internal energy density $e=\epsilon\rho$ for a viscous fluid. This is to show that viscous effects dissipate kinetic energy into heat.
 
 \vspace{1cm}
 
@@ -102,7 +108,7 @@ Department of Physics, University of Guelph
     	\end{equation}
     	is the total energy density,
     	\begin{equation}
-    		\mathbf{U} = (E + p)\mathbf{v} + \frac{1}{4\pi}\left(-\frac{\mathbf{v}}{c}\times \mathbf{B} + \eta_e \mathbf{j}\right) \times \mathbf{B}
+    		\mathbf{U} = (E + p)\mathbf{v} + \frac{1}{4\pi}\left(-\mathbf{v}\times \mathbf{B} + \frac{4\pi}{c}\eta_e \mathbf{j}\right) \times \mathbf{B}
     	\end{equation}
     	represents the total energy flow vector, $Y$ is defined by
     	\begin{equation}
@@ -110,11 +116,11 @@ Department of Physics, University of Guelph
     	\end{equation}
     	and $\mathbf{S}_{\rm res}$ is the resistive source term given by
     	\begin{equation}
-    		\mathbf{S}_{\rm res} = \frac{1}{4\pi}\eta_e \nabla^2\mathbf{B} + \mathbf{j}\times \nabla \eta_e.
+    		\mathbf{S}_{\rm res} = \eta_e \nabla^2\mathbf{B} + \frac{4\pi}{c}\mathbf{j}\times \nabla \eta_e.
     	\end{equation}
 
     \item[$(c)$] (\emph{Dissipation of magnetic energy})\\
-    	Note that the total energy density $\tau$ in $(b)$ is strictly conserved, despite the fact that magnetic energy is dissipated. Use energy evolution equations to show what happens to the dissipated magnetic energy density. You will want to look at separate energy evolution equations as in Problem 1, and you may reuse expressions from $(b)$.
+    	Note that the total energy density $\tau$ in $(b)$ is strictly conserved, despite the fact that magnetic energy is dissipated. Use energy evolution equations to show what happens to the dissipated magnetic energy density. You will want to look at separate energy evolution equations similar to Problem 1, and you may reuse expressions from $(b)$.
 
 \end{itemize}
 
