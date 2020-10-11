@@ -17,6 +17,8 @@
 
 **Office hours:** Wednesdays 1:30 PM via zoom
 
+**Recordings:** Recordings of the lectures are available [here](http://pirsa.org/C20033).
+
 
 ## Contents
 
