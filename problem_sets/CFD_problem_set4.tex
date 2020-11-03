@@ -1,0 +1,166 @@
+\documentclass[letter,11pt]{article}
+\usepackage{authblk}
+\usepackage[english]{babel}
+
+%\usepackage{url}
+%\usepackage{graphicx}
+%\usepackage[boxed,lined]{algorithm2e}
+%\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}           % wird für proof-Umgebung gebraucht
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{empheq}
+\usepackage{natbib}
+%\usepackage{titlesec}
+%\usepackage{anysize}
+%\setlength{\textwidth}{160mm}
+%\setlength{\oddsidemargin}{2mm}
+%\setlength{\textheight}{234mm} % 234
+%\setlength{\topmargin}{-20mm} %-5
+
+\usepackage{geometry} % Allows the configuration of document margins
+%\geometry{a4paper, textwidth=5.2in, textheight=8.5in,
+%  marginparsep=7pt, marginparwidth=.6in} % Document margin settings
+\geometry{marginparsep=0pt, marginparwidth=0in,top=1in,bottom=1in, right=1.5in, left=1.5in, headsep=0.1in,headheight=0.5in}
+
+\usepackage{graphicx}  % needed for figures
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+%--- fill inside borders ---
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=blue,         % color of internal links
+  citecolor=blue,         % color of links to bibliography
+}
+
+% set header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancypagestyle{problem_set}{
+\rhead{Fall 2020}
+\lhead{Guelph-Waterloo Physics Institute (GWPI)}
+\cfoot{\thepage}
+%\rfoot{Page \thepage}
+}
+
+\renewcommand\Affilfont{\itshape}
+
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\Rtwo}{\mathbb{R}^2}
+\newcommand{\Rthree}{\mathbb{R}^3}
+\newcommand{\RR}{\mathbb{R}}
+
+\newenvironment{itemize*}%
+  {\begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{itemize}}
+
+
+
+\begin{document}
+\pagestyle{problem_set}
+
+
+\phantom{.}
+%\vspace{0.1cm}
+\begin{center}
+{\Large\textbf{Computational Fluid Dynamics\\[0.4cm] Problem Set 4}} \\[0.7cm]
+Daniel M. Siegel \\[0.1cm]
+Perimeter Institute for Theoretical Physics\\
+Department of Physics, University of Guelph
+\end{center}
+
+\vspace{1cm}
+
+{\noindent\large\textbf{Problem 1 (Jump conditions for the Euler equations)}}\\[0.1cm]
+
+\noindent Consider a 3-shock with shock velocity $S_3$ for the 1D Euler equations in conservative form, assuming an ideal gas with adiabatic constant $\gamma$. Let $(\rho_\star, v_\star, p_\star)$ and $(\rho_r, v_r, p_r)$ denote the sets of primitive variables on the left and right side of the shock front, respectively. Derive the Rankine-Hugoniot jump conditions
+\begin{equation}
+  \frac{\rho_\star}{\rho_r} = \frac{\frac{p_\star}{p_r}+ \frac{\gamma-1}{\gamma+1}}{\frac{\gamma-1}{\gamma+1}\frac{p_\star}{p_r} + 1}, \mskip40mu s_3 = v_r + c_r \sqrt{\frac{\gamma + 1}{2\gamma}\frac{p_\star}{p_r}+\frac{\gamma-1}{2\gamma}},
+\end{equation}
+where $c=\sqrt{\gamma p / \rho}$ denotes the sound speed.
+
+\vspace{2cm}
+
+{\noindent\large\textbf{Problem 2 (Non-uniqueness of weak solutions)}}\\[-0.4cm]
+
+\noindent A given initial value problem for conservation laws admits, in general, infinitely many weak solutions. Consider the Riemann problem for the inviscid Burgers' equation:
+\begin{equation}
+  \left\{ \begin{array}{l}
+  \partial_t u + \partial_x\left(\frac{1}{2}u^2\right) = 0 \\
+  u(0,x) = \left\{ \begin{array}{cc}
+  1 & \mathrm{if}\, x>0 \\
+  0 & \mathrm{if}\, x<0 \\
+  \end{array}\right.\\
+  \end{array}\right.. \label{eq:RP_Burgers}
+  \end{equation}
+Show that for any $\alpha\in(0,1)$ the `two-shock solution'
+\begin{equation}
+  u_\alpha(t,x) \equiv \left\{ \begin{array}{ll}
+    0 & \mathrm{if}\, x< \frac{\alpha}{2}t \\
+    \alpha & \mathrm{if}\, \frac{\alpha}{2}t<x<\frac{1+\alpha}{2}t \\
+    1 & \mathrm{if}\, x>\frac{1+\alpha}{2}t \\
+  \end{array}\right. .
+\end{equation}
+is a weak solution to the Cauchy problem \eqref{eq:RP_Burgers}.
+
+%\vfill
+%\vspace{1cm}
+
+\newpage
+\phantom{.}
+
+{\noindent\large\textbf{Problem 3 (Entropy pair \& Riemann invariants)}}\\
+
+\noindent Consider the 1D Euler equations for an ideal gas with entropy $S = S_0 + c_v\ln\frac{p}{\rho^\gamma}$, where $S_0$ and $c_v$ are constants and $\gamma$ is the adiabatic index.
+
+\begin{enumerate}
+  \item \emph{(Entropy pair)} Show that the entropy satisfies
+  \begin{equation}
+    S_t + v S_x = 0
+  \end{equation}
+  where the solution is smooth. What is the entropy flux? This is to show that modulo a minus sign the physical entropy provides an entropy--entropy-flux pair for the Euler equations.
+
+  \item \emph{(Riemann invariants)} Consider the Euler equations in primitive form using the primitives $(\rho,v,S)$. Show that $S$ is a Riemann invariant. Show that there exist the following $k$-Riemann invariants:
+  \begin{itemize}
+    \item $k = 1$: $S$, $u+ \frac{2}{\gamma - 1}c$
+    \item $k = 2$: $u$, $p$
+    \item $k = 3$: $S$, $u- \frac{2}{\gamma - 1}c$
+  \end{itemize}
+
+  \item \emph{(Characteristic fields)} Show that the $k=2$ characteristic field is linearly degenerate, while the $k=1,3$ characteristic fields are genuinely non-linear. \emph{Hint:} It is easiest to work with the conservative formulation here.
+
+\end{enumerate}
+
+\vspace{1cm}
+
+{\noindent\large\textbf{Problem 4 (Solution to Burgers' equation)}}\\
+
+\noindent Determine and sketch the exact entropy solution to Burgers' equation $u_t + (\frac{1}{2}u^2)_x = 0$ for all $t>0$ for initial data given by
+\begin{equation}
+  u^0(x) = \left\{ \begin{array}{ll}
+  -1 & \mathrm{if}\, x<-1 \\
+  0 & \mathrm{if}\, -1<x<1 \\
+  1 & \mathrm{if}\, x>1
+  \end{array}\right.
+\end{equation}
+
+\vspace{1cm}
+
+{\noindent\large\textbf{Problem 5 (Bonus question, not required)}}\\
+
+\noindent Consider a piecewise smooth weak solution $u$ of the system $u_t + f(u)_x = 0$, and assume that an entropy pair to the equation is given by $(\Phi,\Psi)$. Show that the entropy condition along the discontinuity with velocity $s$ leads to the inequality
+\begin{equation}
+  s[\Phi(u_l) - \Phi(u_r)] \le \Psi(u_l) - \Psi(u_r),
+\end{equation}
+where $u_l$ and $u_r$ denote the values of $u$ immediately left and right of the discontinuity.
+\emph{Hint:} Consider the Rankine-Hugoniot theorem.
+\emph{Remark:} This is the first step in showing the equivalence of the Lax entropy condition and the entropy inequalities.
+
+\end{document}
+
