@@ -1,0 +1,117 @@
+\documentclass[letter,11pt]{article}
+\usepackage{authblk}
+\usepackage[english]{babel}
+
+%\usepackage{url}
+%\usepackage{graphicx}
+%\usepackage[boxed,lined]{algorithm2e}
+%\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}           % wird für proof-Umgebung gebraucht
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{empheq}
+\usepackage{natbib}
+%\usepackage{titlesec}
+%\usepackage{anysize}
+%\setlength{\textwidth}{160mm}
+%\setlength{\oddsidemargin}{2mm}
+%\setlength{\textheight}{234mm} % 234
+%\setlength{\topmargin}{-20mm} %-5
+
+\usepackage{geometry} % Allows the configuration of document margins
+%\geometry{a4paper, textwidth=5.2in, textheight=8.5in,
+%  marginparsep=7pt, marginparwidth=.6in} % Document margin settings
+\geometry{marginparsep=0pt, marginparwidth=0in,top=1in,bottom=1in, right=1.5in, left=1.5in, headsep=0.1in,headheight=0.5in}
+
+\usepackage{graphicx}  % needed for figures
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+%--- fill inside borders ---
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=blue,         % color of internal links
+  citecolor=blue,         % color of links to bibliography
+}
+
+% set header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancypagestyle{problem_set}{
+\rhead{Fall 2020}
+\lhead{Guelph-Waterloo Physics Institute (GWPI)}
+\cfoot{\thepage}
+%\rfoot{Page \thepage}
+}
+
+\renewcommand\Affilfont{\itshape}
+
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\Rtwo}{\mathbb{R}^2}
+\newcommand{\Rthree}{\mathbb{R}^3}
+\newcommand{\RR}{\mathbb{R}}
+
+\newenvironment{itemize*}%
+  {\begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{itemize}}
+
+
+
+\begin{document}
+\pagestyle{problem_set}
+
+
+\phantom{.}
+%\vspace{0.1cm}
+\begin{center}
+{\Large\textbf{Computational Fluid Dynamics\\[0.4cm] Problem Set 5}} \\[0.7cm]
+Daniel M. Siegel \\[0.1cm]
+Perimeter Institute for Theoretical Physics\\
+Department of Physics, University of Guelph
+\end{center}
+
+\vspace{1cm}
+
+{\noindent\large\textbf{Problem 1 (Project: Riemann solver for the Euler equations)}}\\[0.1cm]
+
+\noindent Implement (in a language of your choice, but excluding Fortran) an `exact' Riemann solver to solve the Riemann problem for the one-dimensional time-dependent Euler equations for ideal gases. To verify your implementation and explore solutions, use an adiabatic constant of $\gamma=1.4$ and consider the following initial data for the primitives $\mathbf{w}=(\rho,v,p)$:\\
+
+\begin{tabular}{c|c|c|c|c|c|c}
+  Problem & $\rho_l$ & $v_l$ & $p_l$ & $\rho_r$ & $u_r$ & $p_r$ \\
+  \hline
+  1 & 1.0 & 0.0 & 1.0 & 0.125 & 0.0 & 0.1 \\
+  2 & 1.0 & -2.0 & 0.4 & 1.0 & 2.0 & 0.4 \\
+\end{tabular}\\
+
+\noindent Problem 1 results in a left rarefaction wave and a right shock, while Problem 2 results in a two-rarefaction wave solution. Plot density, pressure, velocity and internal energy at time $t = 0.25$ for Problem 1 and $t=0.15$ for Problem 2 on a domain $x\in [-1,1]$ and verify that the behavior of these quantities across the three non-linear wave structures looks as expected.\\
+
+\noindent\emph{Hints:}
+\begin{enumerate}
+  \item Follow the solution strategy as discussed in the lectures. You will find additional detail in Chap.~4 of Toro's book. You can check your solutions against Tabs.~4.2 and 4.3 in Toro's book.
+  
+  \item First, find the pressure in the star region $p^*$, using a Newton-Raphson scheme on the pressure function $f(p)$ discussed in the lectures. You may use $p^*_{\rm guess}=\frac{1}{2}(p_l + p_r)$ as initial guess for $p^*$ and a relative tolerance of $10^{-6}$ for the root-finding procedure.
+
+  \item Second, compute the solution for the primitives $\mathbf{w}(x,t)=(\rho(x,t), v(x,t), p(x,t))$. Use a spatial grid $x\in [-1,1]$ with the initial discontinuity at $x=0$. Due to the self-similar nature of the solution, sample the solution for the primitives $\mathbf{w}(x,t)$ as a function of the `speed' $S=x/t$. The corresponding solutions were discussed in the lectures. Once you specify the time $t$, the solution profiles become a function of $x$ only.
+\end{enumerate}
+
+
+
+%\vspace{2cm}
+
+\newpage
+
+\phantom{.}
+
+{\noindent\large\textbf{Problem 2 (Bonus question---discrete entropy condition)}}\\
+
+\noindent Consider the situation of the Lax-Wendroff theorem and assume that the conservative scheme is consistent with the discrete entropy condition. Show that the scheme then converges to a weak solution of the conservation law that satisfies the entropy condition.\\
+
+\noindent\emph{Hint:} The proof is similar to the proof of the Lax-Wendroff theorem.
+
+\end{document}
+
