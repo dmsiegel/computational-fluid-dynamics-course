@@ -1,0 +1,114 @@
+\documentclass[letter,11pt]{article}
+\usepackage{authblk}
+\usepackage[english]{babel}
+
+%\usepackage{url}
+%\usepackage{graphicx}
+%\usepackage[boxed,lined]{algorithm2e}
+%\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}           % wird für proof-Umgebung gebraucht
+\usepackage{bm}
+\usepackage{enumerate}
+\usepackage{empheq}
+\usepackage{natbib}
+%\usepackage{titlesec}
+%\usepackage{anysize}
+%\setlength{\textwidth}{160mm}
+%\setlength{\oddsidemargin}{2mm}
+%\setlength{\textheight}{234mm} % 234
+%\setlength{\topmargin}{-20mm} %-5
+
+\usepackage{geometry} % Allows the configuration of document margins
+%\geometry{a4paper, textwidth=5.2in, textheight=8.5in,
+%  marginparsep=7pt, marginparwidth=.6in} % Document margin settings
+\geometry{marginparsep=0pt, marginparwidth=0in,top=1in,bottom=1in, right=1.5in, left=1.5in, headsep=0.1in,headheight=0.5in}
+
+\usepackage{graphicx}  % needed for figures
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+%--- fill inside borders ---
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=blue,         % color of internal links
+  citecolor=blue,         % color of links to bibliography
+}
+
+% set header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancypagestyle{problem_set}{
+\rhead{Fall 2020}
+\lhead{Guelph-Waterloo Physics Institute (GWPI)}
+\cfoot{\thepage}
+%\rfoot{Page \thepage}
+}
+
+\renewcommand\Affilfont{\itshape}
+
+\newcommand{\Rn}{\mathbb{R}^n}
+\newcommand{\Rm}{\mathbb{R}^m}
+\newcommand{\Rtwo}{\mathbb{R}^2}
+\newcommand{\Rthree}{\mathbb{R}^3}
+\newcommand{\RR}{\mathbb{R}}
+
+\newenvironment{itemize*}%
+  {\begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\end{itemize}}
+
+
+
+\begin{document}
+\pagestyle{problem_set}
+
+
+\phantom{.}
+%\vspace{0.1cm}
+\begin{center}
+{\Large\textbf{Computational Fluid Dynamics\\[0.4cm] Problem Set 6}} \\[0.7cm]
+Daniel M. Siegel \\[0.1cm]
+Perimeter Institute for Theoretical Physics\\
+Department of Physics, University of Guelph
+\end{center}
+
+\vspace{1cm}
+
+
+{\noindent\large\textbf{Problem 1 (Project: Godunov scheme for the Euler equations)}}\\[0.1cm]
+
+\noindent Using your exact Riemann solver from Problem Set 5, implement (in a language of your choice) the Godunov scheme for the one-dimensional time-dependent Euler equations for ideal gases as discussed in the lectures. We shall focus here on the evolution of Riemann problems, so that the numerical results of the Godunov scheme can be compared to an `exact' solution (which can be computed with the Riemann solver of Problem Set 5). Instructions:
+
+\begin{itemize}
+  \item Consider a discontinuity located at $x=x_0$, which separates two constant states defined by the set of primitive values $w_{\rm l} = (\rho_{\rm l}, v_{\rm l}, p_{\rm l})$ and $w_{\rm r} = (\rho_{\rm r}, v_{\rm r}, p_{\rm r})$. Specifically, consider an ideal gas with adiabatic constant $\gamma=1.4$ and the initial conditions already discussed on Problem Set 5:
+
+    \begin{tabular}{c|c|c|c|c|c|c|c|c}
+    Problem & $\rho_l$ & $v_l$ & $p_l$ & $\rho_r$ & $u_r$ & $p_r$ & $x_0$ & $t$ \\
+    \hline
+    1 & 1.0 & 0.75 & 1.0 & 0.125 & 0.0 & 0.1 & 0.3 & 0.2 \\
+    2 & 1.0 & -2.0 & 0.4 & 1.0 & 2.0 & 0.4 & 0.5 & 0.15\\
+
+\end{tabular}\\
+  \item Consider a spatial domain $x\in[0,1]$, resolved by $M=100$ \emph{cells} $x_i=1,\ldots,M$. We need to introduce \emph{ghost cells} $x_0$ and $x_{M+1}$ outside the computational domain to provide boundary conditions (i.e., flux values $f_{\frac{1}{2}}$ at $x=0$ and $f_{M+\frac{1}{2}}$ at $x=1$). Apply \emph{transmissive} boundary conditions for the primitive variables, i.e., set $w^n_{0}=w^n_1$ and $w^n_{M}=w^n_{M+1}$, where $w^n$ represents the primitives at $t=t^n$. This results in trivial Riemann problems at the boundary interfaces without any waves being generated.
+
+  \item In order to compute the timestep $\Delta t$ for evolution, use $\Delta t = C_{\rm CFL} \frac{\Delta x}{S^n_{\rm max}}$ with $C_{\rm CFL}=0.7$ and the simplified estimate $S^n_{\rm max}=\mathrm{max}_i\{|v_i^n| + c_i^n\}$. Here, $c_i^n$ denotes the sound speed.
+\end{itemize}
+
+\noindent Tasks:
+
+\begin{itemize}
+  \item[$(a)$] Plot density, pressure, velocity and specific internal energy as a fuction of $x$ for the problems and corresponding times $t$ provided in the table above, and compare to the exact solutions using the Riemann solver from Problem Set 5. Use dots for the numerical solution of the Godunov scheme and overplot the exact solution as a solid line. How do you interpret the behavior of the specific internal energy in Problem 2 when using the Godunov method?
+
+  \item[$(b)$] Repeat $(a)$, but using the Lax-Friedrichs method discussed in the lectures instead of the Godunov scheme. The Lax-Friedrichs numerical flux is given by
+  \begin{equation}
+    g(u^n_{i-1}, u^n_{i}) = \frac{1}{2} \left[f(u^n_{i-1})+f(u^n_{i})\right] - \frac{\Delta x}{2\Delta t}(u^n_i - u^n_{i-1}).
+  \end{equation}
+  Comment on the level of `numerical smearing' across discontinuieties the Godunov and Lax-Friedrich schemes give rise to. Do both methods recover the correct non-linear wave speeds (why/why not)?
+
+\end{itemize}
+
+\end{document}
+
